@@ -8,9 +8,11 @@ import java.util.*;
 @Service
 public class ReportService {
 
-    public String generateReport(Collection<Note> noteList) {
+    public String generateReport(int age, String gender, Collection<Note> noteList) {
 
         Long triggersCount = getTriggersCount(noteList);
+
+
 
         return "";
     }
