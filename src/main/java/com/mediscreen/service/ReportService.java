@@ -12,7 +12,7 @@ public class ReportService {
     public String generateReport(int age, String gender, Collection<Note> noteList) {
 
         Long triggersCount = getTriggersCount(noteList);
-        String riskLevel = "NONE";
+        String riskLevel = Report.NONE.toString();
 
         if (age > 30 && triggersCount >= 8L
         || gender == "M" && age < 30 && triggersCount >= 5L
@@ -22,6 +22,10 @@ public class ReportService {
                 || gender == "M" && age < 30 && triggersCount >= 3L
                 || gender == "F" && age < 30 && triggersCount >= 4L) {
             riskLevel = Report.IN_DANGER.toString();
+        } else if (age > 30 && triggersCount >= 2L) {
+            riskLevel = Report.BORDERLINE.toString();
+        } else {
+            riskLevel = Report.NONE.toString();
         }
 
         return riskLevel;
