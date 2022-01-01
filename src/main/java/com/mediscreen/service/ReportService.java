@@ -18,6 +18,10 @@ public class ReportService {
         || gender == "M" && age < 30 && triggersCount >= 5L
         || gender == "F" && age < 30 && triggersCount >= 7L) {
             riskLevel = Report.EARLY_ONSET.toString();
+        } else if (age > 30 && triggersCount >= 6L
+                || gender == "M" && age < 30 && triggersCount >= 3L
+                || gender == "F" && age < 30 && triggersCount >= 4L) {
+            riskLevel = Report.IN_DANGER.toString();
         }
 
         return riskLevel;
