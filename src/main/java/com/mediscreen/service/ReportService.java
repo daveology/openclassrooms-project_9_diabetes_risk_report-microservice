@@ -10,6 +10,13 @@ public class ReportService {
 
     public String generateReport(Collection<Note> noteList) {
 
+        Long triggersCount = getTriggersCount(noteList);
+
+        return "";
+    }
+
+    public Long getTriggersCount(Collection<Note> noteList) {
+
         HashMap<String, Boolean> triggers = new HashMap<>();
         triggers.put("Hémoglobine A1C", false);
         triggers.put("Microalbumine A1C", false);
@@ -34,6 +41,6 @@ public class ReportService {
                 .filter(entry -> entry.getValue() == true)
                 .count();
 
-        return "";
+        return triggersCount;
     }
 }
