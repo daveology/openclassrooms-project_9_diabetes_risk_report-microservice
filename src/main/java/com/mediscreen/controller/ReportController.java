@@ -20,9 +20,14 @@ public class ReportController {
     @PostMapping("/generateReport")
     public String generateReport(@RequestBody ReportEntriesDto entries) {
 
-        Collection<Note> noteList = new ArrayList<>();
-        if (noteList != null) {noteList.addAll(noteList);}
-        String result = reportService.generateReport(entries.getAge(), entries.getGender(), noteList);
+        String result = reportService.generateReport(entries.getAge(), entries.getGender(), entries.getNoteList());
+        return result;
+    }
+
+    @PostMapping("/getReport")
+    public String getReport(@RequestBody ReportEntriesDto entries) {
+
+        String result = reportService.getReport(entries.getFullName(), entries.getAge(), entries.getGender(), entries.getNoteList());
         return result;
     }
 }
