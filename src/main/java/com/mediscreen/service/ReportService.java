@@ -46,11 +46,13 @@ public class ReportService {
         triggers.put("Réaction", false);
         triggers.put("Anticorps", false);
 
-        noteList.stream().forEach(note -> {
-            triggers.forEach((key, value) -> {
-                if (note.getContent().contains(key)) { value = true; }
+        if (noteList.size() > 0) {
+            noteList.stream().forEach(note -> {
+                triggers.forEach((key, value) -> {
+                    if (note.getContent().contains(key)) { value = true; }
+                });
             });
-        });
+        }
 
         Long triggersCount = triggers.entrySet()
                 .stream()
