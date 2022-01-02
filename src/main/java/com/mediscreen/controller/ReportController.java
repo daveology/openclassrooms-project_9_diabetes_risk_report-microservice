@@ -5,7 +5,6 @@ import com.mediscreen.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -17,10 +16,8 @@ public class ReportController {
     private ReportService reportService;
 
     @GetMapping("/generateReport")
-    public String generateReport(@RequestParam int age,
-                                 @RequestParam String gender,
-                                 @RequestBody Collection<Note> noteList) {
+    public String generateReport(@RequestBody ReportEntriesDto entries) {
 
-        return reportService.generateReport(age, gender, noteList);
+        return reportService.generateReport(entries.getAge(), entries.getGender(), entries.getNoteList());
     }
 }
