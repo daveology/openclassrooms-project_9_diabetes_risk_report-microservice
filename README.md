@@ -42,6 +42,8 @@
     <img src="src/main/resources/static/intro.PNG" alt="header" />
 </div>
 
+### Please visit the main repository of Mediscreen App: [> Click Here](https://github.com/s2680854/openclassrooms_9th-project_note-microservice)
+
 <!-- ACKNOWLEDGEMENTS -->
 ## 📝 Acknowledgements
 <p id="acknowledgements"></p>
