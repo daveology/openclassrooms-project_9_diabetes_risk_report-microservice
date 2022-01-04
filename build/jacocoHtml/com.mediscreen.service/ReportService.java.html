@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">openclassrooms_9th-project_report-microservice</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.service</a> &gt; <span class="el_source">ReportService.java</span></div><h1>ReportService.java</h1><pre class="source lang-java linenums">package com.mediscreen.service;
+
+import com.mediscreen.model.Note;
+import com.mediscreen.model.Report;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+<span class="fc" id="L10">public class ReportService {</span>
+
+    public String generateReport(int age, String gender, Collection&lt;Note&gt; noteList) {
+
+<span class="fc" id="L14">        Long triggersCount = getTriggersCount(noteList);</span>
+<span class="fc" id="L15">        String riskLevel = Report.NONE.toString();</span>
+
+<span class="pc bpc" id="L17" title="3 of 8 branches missed.">        if (age &gt; 30 &amp;&amp; triggersCount &gt;= 8L</span>
+<span class="pc bpc" id="L18" title="5 of 6 branches missed.">        || gender == &quot;M&quot; &amp;&amp; age &lt; 30 &amp;&amp; triggersCount &gt;= 5L</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        || gender == &quot;F&quot; &amp;&amp; age &lt; 30 &amp;&amp; triggersCount &gt;= 7L) {</span>
+<span class="nc" id="L20">            riskLevel = Report.EARLY_ONSET.toString();</span>
+<span class="pc bpc" id="L21" title="3 of 8 branches missed.">        } else if (age &gt; 30 &amp;&amp; triggersCount &gt;= 6L</span>
+<span class="pc bpc" id="L22" title="5 of 6 branches missed.">                || gender == &quot;M&quot; &amp;&amp; age &lt; 30 &amp;&amp; triggersCount &gt;= 3L</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">                || gender == &quot;F&quot; &amp;&amp; age &lt; 30 &amp;&amp; triggersCount &gt;= 4L) {</span>
+<span class="nc" id="L24">            riskLevel = Report.IN_DANGER.toString();</span>
+<span class="pc bpc" id="L25" title="2 of 4 branches missed.">        } else if (age &gt; 30 &amp;&amp; triggersCount &gt;= 2L) {</span>
+<span class="fc" id="L26">            riskLevel = Report.BORDERLINE.toString();</span>
+        } else {
+<span class="nc" id="L28">            riskLevel = Report.NONE.toString();</span>
+        }
+
+<span class="fc" id="L31">        return riskLevel;</span>
+    }
+
+    public Long getTriggersCount(Collection&lt;Note&gt; noteList) {
+
+<span class="fc" id="L36">        HashMap&lt;String, Boolean&gt; triggers = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L37">        triggers.put(&quot;HÃ©moglobine A1C&quot;, false);</span>
+<span class="fc" id="L38">        triggers.put(&quot;Microalbumine A1C&quot;, false);</span>
+<span class="fc" id="L39">        triggers.put(&quot;Taille A1C&quot;, false);</span>
+<span class="fc" id="L40">        triggers.put(&quot;Poids&quot;, false);</span>
+<span class="fc" id="L41">        triggers.put(&quot;Fumeur&quot;, false);</span>
+<span class="fc" id="L42">        triggers.put(&quot;Anormal&quot;, false);</span>
+<span class="fc" id="L43">        triggers.put(&quot;CholestÃ©rol&quot;, false);</span>
+<span class="fc" id="L44">        triggers.put(&quot;Vertige&quot;, false);</span>
+<span class="fc" id="L45">        triggers.put(&quot;Rechute&quot;, false);</span>
+<span class="fc" id="L46">        triggers.put(&quot;RÃ©action&quot;, false);</span>
+<span class="fc" id="L47">        triggers.put(&quot;Anticorps&quot;, false);</span>
+
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (noteList.size() &gt; 0) {</span>
+<span class="fc" id="L50">            noteList.stream().forEach(note -&gt; {</span>
+<span class="fc" id="L51">                triggers.entrySet().forEach(entry -&gt; {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                    if (note.getContent().contains(entry.getKey())) { entry.setValue(true); }</span>
+<span class="fc" id="L53">                });</span>
+<span class="fc" id="L54">            });</span>
+        }
+        //triggers.entrySet().stream().forEach(entry -&gt; System.out.println(entry.getValue()));
+<span class="fc" id="L57">        Long triggersCount = triggers.entrySet()</span>
+<span class="fc" id="L58">                .stream().filter(entry -&gt; entry.getValue().booleanValue())</span>
+<span class="fc" id="L59">                .count();</span>
+
+<span class="fc" id="L61">        return triggersCount;</span>
+    }
+
+    public String getReport(String fullname, int age, String gender, Collection&lt;Note&gt; noteList) {
+
+<span class="fc" id="L66">        Long triggersCount = getTriggersCount(noteList);</span>
+<span class="fc" id="L67">        String riskLevel = Report.NONE.toString();</span>
+
+<span class="pc bpc" id="L69" title="3 of 8 branches missed.">        if (age &gt; 30 &amp;&amp; triggersCount &gt;= 8L</span>
+<span class="pc bpc" id="L70" title="5 of 6 branches missed.">                || gender == &quot;M&quot; &amp;&amp; age &lt; 30 &amp;&amp; triggersCount &gt;= 5L</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                || gender == &quot;F&quot; &amp;&amp; age &lt; 30 &amp;&amp; triggersCount &gt;= 7L) {</span>
+<span class="nc" id="L72">            riskLevel = Report.EARLY_ONSET.toString();</span>
+<span class="pc bpc" id="L73" title="3 of 8 branches missed.">        } else if (age &gt; 30 &amp;&amp; triggersCount &gt;= 6L</span>
+<span class="pc bpc" id="L74" title="5 of 6 branches missed.">                || gender == &quot;M&quot; &amp;&amp; age &lt; 30 &amp;&amp; triggersCount &gt;= 3L</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                || gender == &quot;F&quot; &amp;&amp; age &lt; 30 &amp;&amp; triggersCount &gt;= 4L) {</span>
+<span class="nc" id="L76">            riskLevel = Report.IN_DANGER.toString();</span>
+<span class="pc bpc" id="L77" title="2 of 4 branches missed.">        } else if (age &gt; 30 &amp;&amp; triggersCount &gt;= 2L) {</span>
+<span class="fc" id="L78">            riskLevel = Report.BORDERLINE.toString();</span>
+        } else {
+<span class="nc" id="L80">            riskLevel = Report.NONE.toString();</span>
+        }
+
+<span class="fc" id="L83">        return &quot;Patient: Test &quot; + fullname + &quot; (age &quot; + age + &quot;) diabetes assessment is: &quot; + riskLevel;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

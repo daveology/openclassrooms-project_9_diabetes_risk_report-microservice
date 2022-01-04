@@ -1,10 +1,10 @@
 HELP.md
 .gradle
-build/
+build/*
+!build/jacocoHtml/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-!**/build/jacocoHtml/**/build/
 
 ### STS ###
 .apt_generated
