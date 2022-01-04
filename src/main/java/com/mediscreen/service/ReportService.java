@@ -53,7 +53,7 @@ public class ReportService {
                 });
             });
         }
-        triggers.entrySet().stream().forEach(entry -> System.out.println(entry.getValue()));
+        //triggers.entrySet().stream().forEach(entry -> System.out.println(entry.getValue()));
         Long triggersCount = triggers.entrySet()
                 .stream().filter(entry -> entry.getValue().booleanValue())
                 .count();
